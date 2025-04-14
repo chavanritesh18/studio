@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -77,5 +78,104 @@ body {
   body {
     @apply bg-background text-foreground;
     font-family: 'Roboto', sans-serif; /* Apply modern sans-serif font */
+  }
+}
+
+/* Enhanced color scheme for a more vibrant SaaS feel */
+:root {
+  --background: 230 25% 98%; /* Very light gray */
+  --foreground: 220 30% 20%; /* Dark grayish-blue */
+  --primary: 260 80% 50%; /* A vibrant purple */
+  --primary-foreground: 0 0% 100%; /* White */
+  --secondary: 150 50% 50%; /* A bright teal */
+  --secondary-foreground: 0 0% 100%; /* White */
+  --accent: 50 90% 60%; /* A golden yellow */
+  --accent-foreground: 220 30% 10%; /* Very dark gray */
+  --card: 0 0% 100%; /* White */
+  --card-foreground: 220 30% 20%; /* Dark grayish-blue */
+  --popover: 0 0% 100%; /* White */
+  --popover-foreground: 220 30% 20%; /* Dark grayish-blue */
+  --muted: 220 20% 96%; /* A softer gray for muted elements */
+  --muted-foreground: 220 30% 60%; /* Medium grayish-blue */
+  --border: 220 40% 90%; /* Light gray for borders */
+  --input: 220 20% 96%; /* Input fields match the muted background */
+  --ring: 260 60% 60%; /* Ring color matches primary but is lighter */
+  --destructive: 0 70% 50%; /* A stronger red */
+  --destructive-foreground: 0 0% 100%; /* White */
+
+  /* Chart colors */
+  --chart-1: 40 100% 65%; /* Bright orange */
+  --chart-2: 210 90% 55%; /* Sky blue */
+  --chart-3: 300 70% 50%; /* Magenta */
+  --chart-4: 170 80% 45%; /* Sea green */
+  --chart-5: 60 85% 65%; /* Lemon yellow */
+}
+
+.dark {
+  --background: 220 20% 10%; /* Darker background */
+  --foreground: 0 0% 90%; /* Lighter text */
+  --card: 220 20% 15%; /* Darker card */
+  --card-foreground: 0 0% 90%; /* Lighter text on cards */
+  --popover: 220 20% 15%; /* Darker popover */
+  --popover-foreground: 0 0% 90%; /* Lighter text on popovers */
+  --muted: 220 20% 20%; /* Even darker muted background */
+  --muted-foreground: 0 0% 60%; /* Medium gray text */
+  --border: 220 20% 30%; /* Darker borders */
+  --input: 220 20% 20%; /* Darker input fields */
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 992px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Broader adjustments */
+@media (max-width: 640px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+/* Add fade-in animation */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

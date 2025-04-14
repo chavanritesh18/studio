@@ -10,7 +10,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
+import { cn } from "@/lib/utils";
 
 const RecipeDownload = ({ recipe }: { recipe: GenerateRecipeOutput }) => {
   const { toast } = useToast();
@@ -127,21 +127,22 @@ export default function Home() {
     }
   };
 
+  const quote = "Unlock culinary magic with a snap!";
+
   return (
     <div className={`min-h-screen bg-background py-12 ${fadeIn ? 'opacity-100 transition-opacity duration-500' : 'opacity-0'}`}>
       <div className="container mx-auto px-4">
-        <header className="mb-8">
-          <h1 className="text-3xl font-semibold text-primary text-center">
+        {/* Hero Section */}
+        <section className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-primary mb-4 fade-in">
             RecipeSnap
           </h1>
-          <p className="text-muted-foreground text-center">
-            Generate delicious recipes from your ingredients.
-          </p>
-        </header>
+          <p className="text-muted-foreground text-xl mb-8 fade-in">{quote}</p>
+        </section>
 
         <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Image Upload Section */}
-          <Card className="bg-card rounded-lg shadow-md overflow-hidden">
+          <Card className="bg-card rounded-lg shadow-md overflow-hidden fade-in">
             <CardHeader className="p-4">
               <CardTitle className="text-lg font-medium text-foreground">
                 Upload Ingredients
@@ -184,7 +185,7 @@ export default function Home() {
 
           {/* Ingredients Display Section */}
           {ingredients && (
-            <Card className="bg-card rounded-lg shadow-md overflow-hidden">
+            <Card className="bg-card rounded-lg shadow-md overflow-hidden fade-in">
               <CardHeader className="p-4">
                 <CardTitle className="text-lg font-medium text-foreground">
                   Detected Ingredients
@@ -215,7 +216,7 @@ export default function Home() {
 
           {/* Recipe Generation Section */}
           {ingredients && (
-            <Card className="bg-card rounded-lg shadow-md overflow-hidden">
+            <Card className="bg-card rounded-lg shadow-md overflow-hidden fade-in">
               <CardHeader className="p-4">
                 <CardTitle className="text-lg font-medium text-foreground">
                   Generate Recipe
@@ -245,7 +246,7 @@ export default function Home() {
 
           {/* Recipe Display Section */}
           {recipe && (
-            <Card className="bg-card rounded-lg shadow-md overflow-hidden lg:col-span-3">
+            <Card className="bg-card rounded-lg shadow-md overflow-hidden lg:col-span-3 fade-in">
               <CardHeader className="p-4">
                 <CardTitle className="text-2xl font-medium text-foreground">
                   {recipe.recipeName}
