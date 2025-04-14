@@ -273,15 +273,15 @@ export default function Home() {
                     </ul>
                   </TabsContent>
                   <TabsContent value="instructions">
-                      <h3 className="text-lg font-semibold mb-2 text-foreground">Instructions:</h3>
-                      <div>
-                        {recipe.instructions.split('\n').map((instruction, index) => (
-                          <div key={index} className="text-sm text-foreground mb-2">
-                            {index + 1}. {instruction}
-                          </div>
-                        ))}
-                      </div>
-                    </TabsContent>
+                    <h3 className="text-lg font-semibold mb-2 text-foreground">Instructions:</h3>
+                    <div>
+                      {recipe.instructions.split('\n').map((instruction, index) => (
+                        <div key={index} className="text-sm text-foreground mb-2">
+                          {index + 1}. {instruction}
+                        </div>
+                      ))}
+                    </div>
+                  </TabsContent>
                 </Tabs>
                 <RecipeDownload recipe={recipe} />
               </CardContent>
