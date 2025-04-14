@@ -83,24 +83,24 @@ body {
 
 /* Enhanced color scheme for a more vibrant SaaS feel */
 :root {
-  --background: 230 25% 98%; /* Very light gray */
-  --foreground: 220 30% 20%; /* Dark grayish-blue */
-  --primary: 260 80% 50%; /* A vibrant purple */
+  --background: 240 20% 98%;  /* Creamy White */
+  --foreground: 38 66% 25%;   /* Earthy Green, slightly darkened */
+  --primary: 38 66% 40%;      /* Earthy Green */
   --primary-foreground: 0 0% 100%; /* White */
-  --secondary: 150 50% 50%; /* A bright teal */
+  --secondary: 38 66% 55%;    /* Earthy Green, lighter */
   --secondary-foreground: 0 0% 100%; /* White */
-  --accent: 50 90% 60%; /* A golden yellow */
+  --accent: 25 60% 65%;       /* Burnt Orange, toned down */
   --accent-foreground: 220 30% 10%; /* Very dark gray */
-  --card: 0 0% 100%; /* White */
-  --card-foreground: 220 30% 20%; /* Dark grayish-blue */
-  --popover: 0 0% 100%; /* White */
-  --popover-foreground: 220 30% 20%; /* Dark grayish-blue */
-  --muted: 220 20% 96%; /* A softer gray for muted elements */
-  --muted-foreground: 220 30% 60%; /* Medium grayish-blue */
-  --border: 220 40% 90%; /* Light gray for borders */
-  --input: 220 20% 96%; /* Input fields match the muted background */
-  --ring: 260 60% 60%; /* Ring color matches primary but is lighter */
-  --destructive: 0 70% 50%; /* A stronger red */
+  --card: 25 20% 99%;         /* Very light orange */
+  --card-foreground: 38 66% 25%;   /* Earthy Green, slightly darkened */
+  --popover: 25 20% 99%;       /* Very light orange */
+  --popover-foreground: 38 66% 25%;   /* Earthy Green, slightly darkened */
+  --muted: 38 30% 92%;       /* Light gray with a hint of green */
+  --muted-foreground: 38 50% 50%;   /* Medium green */
+  --border: 38 40% 85%;        /* Light green border */
+  --input: 0 0% 100%;          /* White input fields */
+  --ring: 25 60% 65%;       /* Burnt Orange, toned down */
+  --destructive: 10 70% 50%; /* A stronger red */
   --destructive-foreground: 0 0% 100%; /* White */
 
   /* Chart colors */
@@ -179,3 +179,4 @@ body {
     transform: translateY(0);
   }
 }
+

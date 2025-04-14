@@ -52,7 +52,7 @@ const RecipeDownload = ({ recipe }: { recipe: GenerateRecipeOutput }) => {
 
 
   return (
-    <div className="flex justify-end space-x-2">
+    <div className="flex flex-col space-y-2">
       <Button variant="secondary" size="sm" onClick={downloadRecipe}>
         Download Recipe <Download className="ml-2 h-4 w-4" />
       </Button>
@@ -253,7 +253,6 @@ export default function Home() {
                 </CardTitle>
                 <CardDescription className="text-sm text-muted-foreground flex justify-between items-center">
                   <span>Prep Time: {recipe.prepTime}</span>
-                  <RecipeDownload recipe={recipe} />
                 </CardDescription>
 
               </CardHeader>
@@ -274,10 +273,17 @@ export default function Home() {
                     </ul>
                   </TabsContent>
                   <TabsContent value="instructions">
-                    <h3 className="text-lg font-semibold mb-2 text-foreground">Instructions:</h3>
-                    <p className="text-sm text-foreground">{recipe.instructions}</p>
-                  </TabsContent>
+                      <h3 className="text-lg font-semibold mb-2 text-foreground">Instructions:</h3>
+                      <ol className="list-decimal list-inside mb-4">
+                        {recipe.instructions.split('\n').map((instruction, index) => (
+                          <li key={index} className="text-sm text-foreground mb-2">
+                            {instruction}
+                          </li>
+                        ))}
+                      </ol>
+                    </TabsContent>
                 </Tabs>
+                <RecipeDownload recipe={recipe} />
               </CardContent>
             </Card>
           )}
