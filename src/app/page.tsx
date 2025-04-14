@@ -274,13 +274,13 @@ export default function Home() {
                   </TabsContent>
                   <TabsContent value="instructions">
                       <h3 className="text-lg font-semibold mb-2 text-foreground">Instructions:</h3>
-                      <ol className="list-decimal list-inside mb-4">
+                      <div>
                         {recipe.instructions.split('\n').map((instruction, index) => (
-                          <li key={index} className="text-sm text-foreground mb-2">
-                            {instruction}
-                          </li>
+                          <div key={index} className="text-sm text-foreground mb-2">
+                            {index + 1}. {instruction}
+                          </div>
                         ))}
-                      </ol>
+                      </div>
                     </TabsContent>
                 </Tabs>
                 <RecipeDownload recipe={recipe} />
@@ -292,4 +292,5 @@ export default function Home() {
     </div>
   );
 }
+
 

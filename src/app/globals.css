@@ -222,3 +222,46 @@ body {
   --border: 220 20% 30%; /* Darker borders */
   --input: 220 20% 20%; /* Darker input fields */
 }
+
+/* Custom color scheme */
+:root {
+  --background: 220 20% 99%; /* Very light gray */
+  --foreground: 220 30% 20%; /* Dark gray */
+  --primary: 150 80% 40%; /* Turquoise */
+  --primary-foreground: 0 0% 100%; /* White */
+  --secondary: 50 90% 50%; /* Yellow-green */
+  --secondary-foreground: 220 30% 20%; /* Dark gray */
+  --accent: 35 70% 65%; /* Orange */
+  --accent-foreground: 220 30% 10%; /* Black */
+  --card: 0 0% 100%; /* White */
+  --card-foreground: 220 30% 20%; /* Dark gray */
+  --popover: 0 0% 100%; /* White */
+  --popover-foreground: 220 30% 20%; /* Dark gray */
+  --muted: 0 0% 96%; /* Light gray */
+  --muted-foreground: 220 30% 60%; /* Medium gray */
+  --border: 220 40% 85%; /* Light gray border */
+  --input: 0 0% 100%; /* White input fields */
+  --ring: 150 80% 40%; /* Turquoise ring */
+  --destructive: 0 90% 50%; /* Red */
+  --destructive-foreground: 0 0% 100%; /* White */
+
+  /* Chart colors - adjusted */
+  --chart-1: 40 90% 60%; /* Bright orange */
+  --chart-2: 210 90% 50%; /* Sky blue */
+  --chart-3: 300 90% 40%; /* Magenta */
+  --chart-4: 170 90% 35%; /* Sea green */
+  --chart-5: 60 90% 50%; /* Lemon yellow */
+}
+
+.dark {
+  --background: 220 20% 10%;
+  --foreground: 0 0% 90%;
+  --card: 220 20% 15%;
+  --card-foreground: 0 0% 90%;
+  --popover: 220 20% 15%;
+  --popover-foreground: 0 0% 90%;
+  --muted: 220 20% 20%;
+  --muted-foreground: 0 0% 60%;
+  --border: 220 20% 30%;
+  --input: 220 20% 20%;
+}
