@@ -265,3 +265,46 @@ body {
   --border: 220 20% 30%;
   --input: 220 20% 20%;
 }
+
+/* Custom color scheme */
+:root {
+  --background: 220 14% 96%; /* Soft gray */
+  --foreground: 220 25% 20%; /* Darker gray */
+  --primary: 40 70% 45%; /* Earthy green */
+  --primary-foreground: 0 0% 100%; /* White */
+  --secondary: 50 80% 50%; /* Yellow-green */
+  --secondary-foreground: 220 25% 20%; /* Darker gray */
+  --accent: 25 70% 55%; /* Muted orange */
+  --accent-foreground: 220 20% 10%; /* Black */
+  --card: 0 0% 100%; /* White */
+  --card-foreground: 220 25% 20%; /* Darker gray */
+  --popover: 0 0% 100%; /* White */
+  --popover-foreground: 220 25% 20%; /* Darker gray */
+  --muted: 0 0% 94%; /* Lighter gray */
+  --muted-foreground: 220 25% 60%; /* Medium gray */
+  --border: 220 30% 85%; /* Light gray border */
+  --input: 0 0% 100%; /* White input fields */
+  --ring: 40 70% 45%; /* Earthy green ring */
+  --destructive: 10 80% 50%; /* Red */
+  --destructive-foreground: 0 0% 100%; /* White */
+
+  /* Chart colors - adjusted */
+  --chart-1: 40 80% 50%; /* Earthy orange */
+  --chart-2: 210 80% 45%; /* Soft blue */
+  --chart-3: 300 80% 35%; /* Muted magenta */
+  --chart-4: 170 80% 30%; /* Sea green */
+  --chart-5: 60 80% 40%; /* Soft yellow */
+}
+
+.dark {
+  --background: 220 10% 10%;
+  --foreground: 0 0% 90%;
+  --card: 220 10% 15%;
+  --card-foreground: 0 0% 90%;
+  --popover: 220 10% 15%;
+  --popover-foreground: 0 0% 90%;
+  --muted: 220 10% 20%;
+  --muted-foreground: 0 0% 60%;
+  --border: 220 10% 30%;
+  --input: 220 10% 20%;
+}
