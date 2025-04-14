@@ -11,7 +11,10 @@ import {ai} from '@/ai/ai-instance';
 import {z} from 'genkit';
 
 const IdentifyIngredientsInputSchema = z.object({
-  photoUrl: z.string().describe('The URL of the ingredients photo.'),
+  photo: z.object({
+    url: z.string(),
+    contentType: z.string(),
+  }).describe('The photo of the ingredients, including URL and content type'),
 });
 export type IdentifyIngredientsInput = z.infer<typeof IdentifyIngredientsInputSchema>;
 
@@ -28,7 +31,10 @@ const prompt = ai.definePrompt({
   name: 'identifyIngredientsPrompt',
   input: {
     schema: z.object({
-      photoUrl: z.string().describe('The URL of the ingredients photo.'),
+      photo: z.object({
+        url: z.string(),
+        contentType: z.string(),
+      }).describe('The photo of the ingredients, including URL and content type'),
     }),
   },
   output: {
@@ -40,7 +46,7 @@ const prompt = ai.definePrompt({
 
 You will use the photo to identify the ingredients and return a list of ingredients.
 
-Ingredients Photo: {{media url=photoUrl}}`,
+Ingredients Photo: {{media url=photo.url contentType=photo.contentType}}`,
 });
 
 const identifyIngredientsFlow = ai.defineFlow<
@@ -52,7 +58,10 @@ const identifyIngredientsFlow = ai.defineFlow<
   outputSchema: IdentifyIngredientsOutputSchema,
 },
 async input => {
-  const {output} = await prompt(input);
+  const {output} = await prompt({
+    photo: {url: input.photo.url, contentType: input.photo.contentType},
+  });
+
   return output!;
 }
 );

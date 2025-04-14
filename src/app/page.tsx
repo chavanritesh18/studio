@@ -7,6 +7,48 @@ import { Input } from "@/components/ui/input";
 import { generateRecipe, GenerateRecipeOutput } from "@/ai/flows/generate-recipe";
 import { identifyIngredients } from "@/ai/flows/identify-ingredients";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Download } from "lucide-react";
+
+const RecipeDownload = ({ recipe }: { recipe: GenerateRecipeOutput }) => {
+    const downloadRecipe = () => {
+        const recipeContent = `Recipe Name: ${recipe.recipeName}\nPrep Time: ${recipe.prepTime}\n\nIngredients:\n${recipe.ingredients.map(i => `- ${i}`).join('\n')}\n\nInstructions:\n${recipe.instructions}`;
+        const blob = new Blob([recipeContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${recipe.recipeName.replace(/\s+/g, '_')}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    const downloadIngredients = () => {
+        const ingredientsContent = recipe.ingredients.map(i => `- ${i}`).join('\n');
+        const blob = new Blob([ingredientsContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${recipe.recipeName.replace(/\s+/g, '_')}_ingredients.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+
+    return (
+        <div className="flex justify-end space-x-2">
+            <Button variant="secondary" size="sm" onClick={downloadRecipe}>
+                Download Recipe <Download className="ml-2 h-4 w-4" />
+            </Button>
+            <Button variant="secondary" size="sm" onClick={downloadIngredients}>
+                Download Ingredients <Download className="ml-2 h-4 w-4" />
+            </Button>
+        </div>
+    );
+};
 
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
@@ -16,31 +58,38 @@ export default function Home() {
   const [loadingIngredients, setLoadingIngredients] = useState(false);
   const [loadingRecipe, setLoadingRecipe] = useState(false);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-      setImageUrl(URL.createObjectURL(file));
-    }
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+          setImage(file);
+          const reader = new FileReader();
+          reader.onloadend = () => {
+              const base64String = reader.result as string;
+              setImageUrl(base64String);
+          };
+          reader.readAsDataURL(file);
+      }
   };
 
-  const handleDetectIngredients = async () => {
-    if (!imageUrl) {
-      alert("Please upload an image first.");
-      return;
-    }
+    const handleDetectIngredients = async () => {
+        if (!imageUrl) {
+            alert("Please upload an image first.");
+            return;
+        }
 
-    setLoadingIngredients(true);
-    try {
-      const result = await identifyIngredients({ photoUrl: imageUrl });
-      setIngredients(result.ingredients);
-    } catch (error) {
-      console.error("Error detecting ingredients:", error);
-      alert("Failed to detect ingredients. Please try again.");
-    } finally {
-      setLoadingIngredients(false);
-    }
-  };
+        setLoadingIngredients(true);
+        try {
+            // Extract content type from data URI
+            const contentType = imageUrl.match(/data:(.*);base64/)?.[1] || "image/jpeg";
+            const result = await identifyIngredients({ photo: { url: imageUrl, contentType: contentType } });
+            setIngredients(result.ingredients);
+        } catch (error) {
+            console.error("Error detecting ingredients:", error);
+            alert("Failed to detect ingredients. Please try again.");
+        } finally {
+            setLoadingIngredients(false);
+        }
+    };
 
   const handleGenerateRecipe = async () => {
     if (!ingredients || ingredients.length === 0) {
@@ -132,18 +181,29 @@ export default function Home() {
             <CardTitle className="text-2xl">{recipe.recipeName}</CardTitle>
             <CardDescription className="text-sm text-muted-foreground">
               Prep Time: {recipe.prepTime}
+                <RecipeDownload recipe={recipe} />
             </CardDescription>
+
           </CardHeader>
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-2">Ingredients:</h3>
-            <ul className="list-disc list-inside mb-4">
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index} className="text-sm">{ingredient}</li>
-              ))}
-            </ul>
-
-            <h3 className="text-lg font-semibold mb-2">Instructions:</h3>
-            <p className="text-sm">{recipe.instructions}</p>
+            <Tabs defaultValue="ingredients" className="w-full">
+              <TabsList>
+                <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
+                <TabsTrigger value="instructions">Instructions</TabsTrigger>
+              </TabsList>
+              <TabsContent value="ingredients">
+                <h3 className="text-lg font-semibold mb-2">Ingredients:</h3>
+                <ul className="list-disc list-inside mb-4">
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <li key={index} className="text-sm">{ingredient}</li>
+                  ))}
+                </ul>
+              </TabsContent>
+              <TabsContent value="instructions">
+                <h3 className="text-lg font-semibold mb-2">Instructions:</h3>
+                <p className="text-sm">{recipe.instructions}</p>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       )}
