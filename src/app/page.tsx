@@ -110,104 +110,160 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen py-10 bg-background">
-      <h1 className="text-4xl font-bold mb-8 text-primary">RecipeSnap</h1>
+    <div className="min-h-screen bg-background py-12">
+      <div className="container mx-auto px-4">
+        <header className="mb-8">
+          <h1 className="text-3xl font-semibold text-primary text-center">
+            RecipeSnap
+          </h1>
+          <p className="text-muted-foreground text-center">
+            Generate delicious recipes from your ingredients.
+          </p>
+        </header>
 
-      {/* Image Upload Section */}
-      <Card className="w-full max-w-md mb-6 bg-card shadow-md">
-        <CardHeader>
-          <CardTitle className="text-lg">Upload Your Ingredients</CardTitle>
-          <CardDescription className="text-sm text-muted-foreground">
-            Upload an image to identify the ingredients.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-6">
-          <Input type="file" accept="image/*" onChange={handleImageUpload} className="mb-4" />
-          {imageUrl && (
-            <img src={imageUrl} alt="Uploaded Ingredients" className="rounded-md mb-4" style={{ maxHeight: '200px', objectFit: 'contain' }} />
+        <section className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Image Upload Section */}
+          <Card className="bg-card rounded-lg shadow-md overflow-hidden">
+            <CardHeader className="p-4">
+              <CardTitle className="text-lg font-medium">
+                Upload Ingredients
+              </CardTitle>
+              <CardDescription className="text-sm text-muted-foreground">
+                Upload an image to identify ingredients.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-4">
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="mb-4"
+              />
+              {imageUrl && (
+                <img
+                  src={imageUrl}
+                  alt="Uploaded Ingredients"
+                  className="rounded-md mb-4 w-full object-cover"
+                  style={{ maxHeight: "200px" }}
+                />
+              )}
+              <Button
+                onClick={handleDetectIngredients}
+                disabled={loadingIngredients}
+                className="w-full bg-accent text-accent-foreground hover:bg-accent/80 rounded-md"
+              >
+                {loadingIngredients ? (
+                  <>
+                    <Skeleton className="w-4 h-4 mr-2" />
+                    Detecting...
+                  </>
+                ) : (
+                  "Detect Ingredients"
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Ingredients Display Section */}
+          {ingredients && (
+            <Card className="bg-card rounded-lg shadow-md overflow-hidden">
+              <CardHeader className="p-4">
+                <CardTitle className="text-lg font-medium">
+                  Detected Ingredients
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                  Here are the ingredients we found in your image.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-4">
+                {loadingIngredients ? (
+                  <Skeleton className="h-4 w-full" />
+                ) : ingredients.length > 0 ? (
+                  <ul className="list-disc list-inside">
+                    {ingredients.map((ingredient, index) => (
+                      <li key={index} className="text-sm">
+                        {ingredient}
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    No ingredients detected.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
           )}
-          <Button onClick={handleDetectIngredients} disabled={loadingIngredients} className="w-full bg-accent text-card-foreground hover:bg-accent-foreground">
-            {loadingIngredients ? <><Skeleton className="w-4 h-4 mr-2" /> Detecting Ingredients...</> : "Detect Ingredients"}
-          </Button>
-        </CardContent>
-      </Card>
 
-      {/* Ingredients Display Section */}
-      {ingredients && (
-        <Card className="w-full max-w-md mb-6 bg-card shadow-md">
-          <CardHeader>
-            <CardTitle className="text-lg">Detected Ingredients</CardTitle>
-            <CardDescription className="text-sm text-muted-foreground">
-              Here are the ingredients we found in your image.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            {loadingIngredients ? (
-              <Skeleton className="h-4 w-full" />
-            ) : ingredients.length > 0 ? (
-              <ul className="list-disc list-inside">
-                {ingredients.map((ingredient, index) => (
-                  <li key={index} className="text-sm">{ingredient}</li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-sm text-muted-foreground">No ingredients detected.</p>
-            )}
-          </CardContent>
-        </Card>
-      )}
+          {/* Recipe Generation Section */}
+          {ingredients && (
+            <Card className="bg-card rounded-lg shadow-md overflow-hidden">
+              <CardHeader className="p-4">
+                <CardTitle className="text-lg font-medium">
+                  Generate Recipe
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground">
+                  Generate a recipe based on the detected ingredients.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-4">
+                <Button
+                  onClick={handleGenerateRecipe}
+                  disabled={loadingRecipe}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/80 rounded-md"
+                >
+                  {loadingRecipe ? (
+                    <>
+                      <Skeleton className="w-4 h-4 mr-2" />
+                      Generating...
+                    </>
+                  ) : (
+                    "Generate Recipe"
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
 
-      {/* Recipe Generation Section */}
-      {ingredients && (
-        <Card className="w-full max-w-md bg-card shadow-md">
-          <CardHeader>
-            <CardTitle className="text-lg">Generate Recipe</CardTitle>
-            <CardDescription className="text-sm text-muted-foreground">
-              Generate a recipe based on the detected ingredients.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            <Button onClick={handleGenerateRecipe} disabled={loadingRecipe} className="w-full bg-primary text-card-foreground hover:bg-primary-foreground">
-              {loadingRecipe ? <><Skeleton className="w-4 h-4 mr-2" /> Generating Recipe...</> : "Generate Recipe"}
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+          {/* Recipe Display Section */}
+          {recipe && (
+            <Card className="bg-card rounded-lg shadow-md overflow-hidden lg:col-span-3">
+              <CardHeader className="p-4">
+                <CardTitle className="text-2xl font-medium">
+                  {recipe.recipeName}
+                </CardTitle>
+                <CardDescription className="text-sm text-muted-foreground flex justify-between items-center">
+                  <span>Prep Time: {recipe.prepTime}</span>
+                    <RecipeDownload recipe={recipe} />
+                </CardDescription>
 
-      {/* Recipe Display Section */}
-      {recipe && (
-        <Card className="w-full max-w-md mt-6 bg-card shadow-md">
-          <CardHeader>
-            <CardTitle className="text-2xl">{recipe.recipeName}</CardTitle>
-            <CardDescription className="text-sm text-muted-foreground">
-              Prep Time: {recipe.prepTime}
-                <RecipeDownload recipe={recipe} />
-            </CardDescription>
-
-          </CardHeader>
-          <CardContent className="p-6">
-            <Tabs defaultValue="ingredients" className="w-full">
-              <TabsList>
-                <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
-                <TabsTrigger value="instructions">Instructions</TabsTrigger>
-              </TabsList>
-              <TabsContent value="ingredients">
-                <h3 className="text-lg font-semibold mb-2">Ingredients:</h3>
-                <ul className="list-disc list-inside mb-4">
-                  {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index} className="text-sm">{ingredient}</li>
-                  ))}
-                </ul>
-              </TabsContent>
-              <TabsContent value="instructions">
-                <h3 className="text-lg font-semibold mb-2">Instructions:</h3>
-                <p className="text-sm">{recipe.instructions}</p>
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
-      )}
+              </CardHeader>
+              <CardContent className="p-4">
+                <Tabs defaultValue="ingredients" className="w-full">
+                  <TabsList>
+                    <TabsTrigger value="ingredients">Ingredients</TabsTrigger>
+                    <TabsTrigger value="instructions">Instructions</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="ingredients">
+                    <h3 className="text-lg font-semibold mb-2">Ingredients:</h3>
+                    <ul className="list-disc list-inside mb-4">
+                      {recipe.ingredients.map((ingredient, index) => (
+                        <li key={index} className="text-sm">
+                          {ingredient}
+                        </li>
+                      ))}
+                    </ul>
+                  </TabsContent>
+                  <TabsContent value="instructions">
+                    <h3 className="text-lg font-semibold mb-2">Instructions:</h3>
+                    <p className="text-sm">{recipe.instructions}</p>
+                  </TabsContent>
+                </Tabs>
+              </CardContent>
+            </Card>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
-
